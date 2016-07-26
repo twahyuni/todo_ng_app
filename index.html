@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="ToDoApp">
+<head>
+  <meta charset="UTF-8">
+  <title>To Do App</title>
+
+  <script src="./bower_components/angular/angular.js"></script>
+  <script src="./bower_components/jquery/dist/jquery.js"></script>
+  <script src="./bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src ="./js/app.js"></script>
+  <script src="./js/controllers/home_controller.js"></script>
+
+  <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body class="container" ng-controller="HomeCtrl">
+  <section class="home">
+    <h1> TO DO LIST </h1>
+    <h4> You have <span class="highlight"> {{ (todos | filter: {done: false}).length }} </span> to do !</h4>
+  </section>
+
+  <section class="done-list">
+    <h5> Completed </h5>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="todo in todos | filter: {done: true}">
+        <span ng-model="completedList"> {{todo.task}} </span>
+        <button class="btn btn-sm btn-default wip-btn pull-right"
+                ng-click="todo.done = !todo.done">
+          Cancel
+        </button>
+        <div class="clearfix"></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="todo-list">
+    <h5> Work In Progress </h5>
+    <ul class="list-group">
+      <li class="list-group-item" ng-repeat="todo in todos | filter: {done: false}">
+        <span ng-model="todoList"> {{todo.task}} </span>
+        <button class="btn btn-sm btn-success done-btn pull-right"
+                ng-click="todo.done = !todo.done">
+          Done
+        </button>
+        <div class="clearfix"></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="input-box">
+    <form class="form" ng-submit="addTodo()">
+      <div class="form-group">
+        <input  type="text"
+                class="form-control"
+                placeholder="I need to..."
+                ng-model="newTodo">
+        </input>
+      </div>
+    </form>
+    <p ng-show="newTodo">About to add todo:
+      <strong> {{newTodo}} </strong>
+    </p>
+  </section>
+</body>
+</html>
